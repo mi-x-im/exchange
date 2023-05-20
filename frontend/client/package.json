@@ -8,6 +8,8 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "cookie": "^0.5.0",
+    "cookie-parser": "^1.4.6",
     "http": "^0.0.1-security",
     "http-proxy-middleware": "^2.0.6",
     "js": "^0.1.0",

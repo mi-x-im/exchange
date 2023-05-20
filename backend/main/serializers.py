@@ -2,7 +2,9 @@ from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 from django.core import exceptions
+from .models import Cryptocurrencies
 User = get_user_model()
+
 
 
 class UserCreateSerializer(serializers.ModelSerializer):
@@ -35,3 +37,11 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('name', 'email')
+
+
+class CryptocurrenciesSerializer(serializers.ModelSerializer):
+    cryptocurrencies = serializers.SlugRelatedField(slug_field="name", read_only=True)
+
+    class Meta:
+        model = Cryptocurrencies
+        fields = '__all__'

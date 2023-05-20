@@ -1,12 +1,14 @@
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model
-
+from bs4 import BeautifulSoup
 from rest_framework import permissions, status
 from rest_framework.views import APIView
+from .serializers import UserCreateSerializer, UserSerializer, CryptocurrenciesSerializer
+from django.core.exceptions import ObjectDoesNotExist
+import requests
+from rest_framework import serializers
 
-from .serializers import UserCreateSerializer, UserSerializer
-
-# from .models import UserAccount, UserAccountManager
+from .models import Cryptocurrencies
 
 User = get_user_model()
 
@@ -32,4 +34,35 @@ class RetrieveUserView(APIView):
     def get(self, request):
         user = request.user
         user = UserSerializer(user)
-        return Response(user.data,status=status.HTTP_200_OK)
+        return Response(user.data, status=status.HTTP_200_OK)
+
+
+class CryptocurrenciesView(APIView):
+
+    def get(self, request):
+        cryptocurrencies = Cryptocurrencies.objects.all()
+
+        url = "https://coinmarketcap.com/"
+
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Mobile Safari/537.36"
+        }
+
+        result = requests.get(url, headers=headers).text
+        soup = BeautifulSoup(result, "lxml")
+
+        tbody = soup.find("tbody")
+        coins = tbody.find_all("tr")
+
+        comps = []
+        for coin in coins:
+            name = coin.find(class_="sc-4984dd93-0 iqdbQL coin-item-symbol")
+            price = coin.find(class_="sc-cadad039-0 clgqXO")
+            if name and price:
+                name = name.text
+                price = price.text
+                print(f"Creating/updating cryptocurrency: {name} - {price}")
+                Cryptocurrencies.objects.update_or_create(name=name, defaults={'price': price})
+            cryptocurrencies = Cryptocurrencies.objects.all()
+            serializer = CryptocurrenciesSerializer(cryptocurrencies, many=True)
+        return Response(serializer.data)

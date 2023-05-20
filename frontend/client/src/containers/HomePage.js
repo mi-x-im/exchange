@@ -1,13 +1,25 @@
-import Layout from "../components/Layout";
 import React from "react";
+import {useSelector, useDispatch} from "react-redux";
+import { useEffect } from 'react';
+import { fetchCryptocurrencies } from '../features/actions';
 
 const HomePage = () => {
-    return (
-        <Layout title='Auth Site | Home' content='Home page'>
+    const dispatch = useDispatch();
+    const cryptocurrencies = useSelector(state => state.cryptocurrencies);
 
-            <h1>Home</h1>
-        </Layout>
-    )
-}
+    useEffect(() => {
+        dispatch(fetchCryptocurrencies());
+    }, [dispatch]);
+
+    return (
+        <ul>
+            {cryptocurrencies.map(crypto => (
+                <li key={crypto.id}>
+                    {crypto.name}: {crypto.price}
+                </li>
+            ))}
+        </ul>
+    );
+};
 
 export default HomePage;

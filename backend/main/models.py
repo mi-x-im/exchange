@@ -38,3 +38,8 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+
+
+class Cryptocurrencies(models.Model):
+    name = models.CharField(max_length=255, default='')
+    price = models.CharField(max_length=255, default='')

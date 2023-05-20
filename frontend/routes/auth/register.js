@@ -1,11 +1,11 @@
-const express = require('express');
+import express from 'express'
 
 const fetch = (...args) =>
 	import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
 const router = express.Router();
 
-router.post('api/users/register', async (req, res) => {
+router.post('/api/users/register', async (req, res) => {
     const {name, email, password} = req.body;
 
     const body =JSON.stringify({
@@ -15,7 +15,7 @@ router.post('api/users/register', async (req, res) => {
     });
 
     try {
-        const registerRes = await fetch('http://localhost:8000/api/users/register', {
+        const apiRes = await fetch(`${process.env.API_URL}/api/users/register`, {
             method: 'POST',
             headers:{
                 Accept: 'application/json',
@@ -24,8 +24,8 @@ router.post('api/users/register', async (req, res) => {
             body,
         });
 
-        const data =await registerRes.json();
-        return res.status(registerRes.status).json(data);
+        const data =await apiRes.json();
+        return res.status(apiRes.status).json(data);
 
     } catch (err) {
         return res.status(500).json({
@@ -38,4 +38,4 @@ router.post('api/users/register', async (req, res) => {
 
 
 
-module.exports=router;
+export default router;

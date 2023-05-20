@@ -1,6 +1,6 @@
 import React from "react";
 import { Helmet } from 'react-helmet';
-import Navbar from '/home/fox/PycharmProjects/pythonProject/frontend/client/src/components/Navbar';
+import Navbar from './Navbar';
 
 const Layout = ({ title, content, children }) => (
 	<>
