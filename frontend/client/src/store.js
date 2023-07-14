@@ -1,9 +1,13 @@
 import {configureStore} from "@reduxjs/toolkit";
-import userReducer from '/home/fox/PycharmProjects/pythonProject/frontend/client/src/features/user'
+import userReducer from '../src/features/user';
+import cryptoReducer from "./features/crypto.mjs";
 
-export const store=configureStore({
+const store = configureStore({
     reducer:{
         user: userReducer,
+        cryptos: cryptoReducer,
     },
     devTools: process.env.NODE_ENV !== 'production'
 });
+
+export default store;
