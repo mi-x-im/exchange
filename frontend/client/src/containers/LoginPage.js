@@ -32,7 +32,7 @@ const LoginPage = () => {
     };
 
     if (isAuthenticated && !loading)
-        return <Navigate to='/dashboard'/>;
+         return <Navigate to='/crypto'/>;
 
     return (
         <Layout title='Auth Site | Login' content='Login page'>

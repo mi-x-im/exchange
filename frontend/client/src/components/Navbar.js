@@ -56,8 +56,8 @@ const Navbar = () => {
                     <div className="navbar-nav">
                         <ul className='navbar-nav'>
                             <li className='nav-item'>
-                                <NavLink className='nav-link' to='/'>
-                                    Home
+                                <NavLink className='nav-link' to='/crypto'>
+                                    Crypto
                                 </NavLink>
                             </li>
                             {isAuthenticated ? authLinks : guestLinks}
