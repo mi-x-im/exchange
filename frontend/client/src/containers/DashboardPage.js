@@ -9,6 +9,7 @@ const DashboardPage = () => {
     if (!isAuthenticated && !loading && user===null)
         return  <Navigate to='/login' />;
 
+
     return (
         <Layout title='Auth Site | Dashboard' content='Dashboard page'>
             {loading || user === null ? (

@@ -71,6 +71,7 @@ const LoginPage = () => {
                     <button className='btn btn-primary mt-4'>Login</button>
                 )}
             </form>
+
         </Layout>
     );
 };
