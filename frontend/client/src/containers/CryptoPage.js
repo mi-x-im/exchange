@@ -2,25 +2,19 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Layout from "../components/Layout";
 
-// Импортируем асинхронное действие getCryptos
 import { getCryptos } from "../features/crypto.mjs";
 import {Navigate} from "react-router-dom";
 
-// Создаем компонент для главной страницы
 const CryptoPage = () => {
-  // Получаем данные из стора с помощью useSelector
   const { cryptos, loading, error } = useSelector((state) => state.cryptos);
   const { isAuthenticated,user } = useSelector(state => state.user);
 
-  // Получаем функцию для диспатча действий с помощью useDispatch
   const dispatch = useDispatch();
 
-  // Используем useEffect для вызова действия при монтировании компонента
   useEffect(() => {
     dispatch(getCryptos());
   }, [dispatch]);
 
-  // Рендерим таблицу с данными о криптовалютах с помощью map или другого метода для перебора массива.
   if (!isAuthenticated  && user===null)
         return  <Navigate to='/login' />;
     return (
@@ -61,5 +55,4 @@ const CryptoPage = () => {
     );
 };
 
-// Экспортируем компонент
 export default CryptoPage;
